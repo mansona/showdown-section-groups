@@ -2,7 +2,7 @@
   "name": "showdown-section-groups",
   "main": "./lib/showdown-section-groups.js",
   "version": "0.0.1",
-  "description": "A boilerplate that can be used to jumpstart your showdown extension development",
+  "description": "A showdown extension that wraps headers and paragraphs in sections",
   "keywords": [
     "markdown",
     "md",
@@ -10,7 +10,7 @@
     "extension"
   ],
   "license": "MIT",
-  "author": "Estevão Soares dos Santos",
+  "author": "Chris Manson <chris.manson@simplabs.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/showdownjs/showdown-extension-boilerplate.git",
@@ -26,8 +26,12 @@
     "mocha": "^5.2.0",
     "showdown": "^1.8.6"
   },
+  "peerDependencies": {
+    "showdown": "*"
+  },
   "scripts": {
     "test": "npm run build && mocha test",
-    "build": "babel src -d lib"
+    "build": "babel src -d lib",
+    "prepublishOnly": "npm build"
   }
 }
