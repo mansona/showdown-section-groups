@@ -1,7 +1,7 @@
 {
   "name": "showdown-section-groups",
   "main": "./lib/showdown-section-groups.js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A showdown extension that wraps headers and paragraphs in sections",
   "keywords": [
     "markdown",
