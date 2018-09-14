@@ -22,7 +22,7 @@ showdown.extension('section-groups', () => ({
     let sectionOpen = false;
 
     for (let i = 0; i < html.length; i += 1) {
-      if (html.substring(i, i + 3) === '<h2') {
+      if (html.substring(i, i + 3).match(/<h\d/)) {
         if (sectionOpen) {
           outputString += '</section>\n';
         }
