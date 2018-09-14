@@ -16,16 +16,22 @@ import showdown from 'showdown';
 
 // The following method will register the extension with showdown
 showdown.extension('section-groups', () => ({
-  type: 'lang', // or output
-  filter(text, converter, options) {
-    // your code here
-    // ...
-    // text is the text being parsed
-    // converter is an instance of the converter
-    // ...
-    // don't forget to return the altered text. If you don't, nothing will appear in the output
+  type: 'output',
+  filter(inputText /**, converter, options */) {
+    let text = inputText;
+
+    text = text.replace(/<h2/g, '</section><h2').replace(/<\/h2>/g, '</h2><section>');
+
+    if (text.startsWith('</section>')) {
+      text = text.replace('</section>', '');
+    } else if (!text.startsWith('<h2')) {
+      text = `<section>${text}`;
+    }
+
+    if (!text.endsWith('</section>')) {
+      text = `${text}</section>`;
+    }
+
     return text;
   },
-  regex: /foo/g, // if filter is present, both regex and replace properties will be ignored
-  replace: 'bar',
 }));
