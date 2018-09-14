@@ -17,11 +17,7 @@ import showdown from 'showdown';
 // The following method will register the extension with showdown
 showdown.extension('section-groups', () => ({
   type: 'output', // or output
-  filter(html, converter, inputOptions) {
-    let options = Object.assign({
-      headerLevels: [2, 3, 4, 5, 6],
-    }, inputOptions);
-
+  filter(html) {
     let outputString = '';
     let sectionOpen = false;
 
@@ -42,9 +38,6 @@ showdown.extension('section-groups', () => ({
       outputString += '\n</section>';
     }
 
-    // console.log('thing', outputString);
     return outputString;
   },
-  regex: /foo/g, // if filter is present, both regex and replace properties will be ignored
-  replace: 'bar',
 }));
