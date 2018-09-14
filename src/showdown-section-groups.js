@@ -16,15 +16,34 @@ import showdown from 'showdown';
 
 // The following method will register the extension with showdown
 showdown.extension('section-groups', () => ({
-  type: 'lang', // or output
-  filter(text, converter, options) {
-    // your code here
-    // ...
-    // text is the text being parsed
-    // converter is an instance of the converter
-    // ...
-    // don't forget to return the altered text. If you don't, nothing will appear in the output
-    return text;
+  type: 'output', // or output
+  filter(html, converter, inputOptions) {
+    let options = Object.assign({
+      headerLevels: [2, 3, 4, 5, 6],
+    }, inputOptions);
+
+    let outputString = '';
+    let sectionOpen = false;
+
+    for (let i = 0; i < html.length; i += 1) {
+      if (html.substring(i, i + 3) === '<h2') {
+        if (sectionOpen) {
+          outputString += '</section>\n';
+        }
+
+        outputString += '<section>\n';
+        sectionOpen = true;
+      }
+
+      outputString += html[i];
+    }
+
+    if (sectionOpen) {
+      outputString += '\n</section>';
+    }
+
+    // console.log('thing', outputString);
+    return outputString;
   },
   regex: /foo/g, // if filter is present, both regex and replace properties will be ignored
   replace: 'bar',
