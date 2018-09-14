@@ -1,43 +1,47 @@
-/**
- * Showdown's Extension boilerplate
- *
- * A boilerplate from where you can easily build extensions
- * for showdown
- */
-
 import showdown from 'showdown';
 
-// This is the extension code per se
+export default function showdownSectionGroups() {
+  return {
+    type: 'output', // or output
+    filter(html) {
+      let outputString = '';
+      let sectionOpen = false;
+      let inHeader = false;
+      let id = '';
 
-// Here you have a safe sandboxed environment where you can use "static code"
-// that is, code and data that is used accros instances of the extension itself
-// If you have regexes or some piece of calculation that is immutable
-// this is the best place to put them.
+      for (let i = 0; i < html.length; i += 1) {
+        if (html.substring(i, i + 3).match(/<h\d/)) {
+          inHeader = true;
 
-// The following method will register the extension with showdown
-showdown.extension('section-groups', () => ({
-  type: 'output', // or output
-  filter(html) {
-    let outputString = '';
-    let sectionOpen = false;
-
-    for (let i = 0; i < html.length; i += 1) {
-      if (html.substring(i, i + 3).match(/<h\d/)) {
-        if (sectionOpen) {
-          outputString += '</section>\n';
+          if (sectionOpen) {
+            outputString += '</section>\n';
+          }
         }
 
-        outputString += '<section>\n';
-        sectionOpen = true;
+        if (inHeader && html.substring(i, i + 4).match(/id="/)) {
+          [, id] = html.substring(i, html.length).match(/^id="(.*)"/);
+        }
+
+        // console.log(html.substring(i - 4, i), html.substring(i - 4, i).match(/<\/h\d>/))
+
+        if (html.substring(i - 5, i).match(/<\/h\d>/)) {
+          outputString += `\n<section aria-labelledby="${id}">`;
+          id = '';
+          inHeader = false;
+          sectionOpen = true;
+        }
+
+        outputString += html[i];
       }
 
-      outputString += html[i];
-    }
+      if (sectionOpen) {
+        outputString += '\n</section>';
+      }
 
-    if (sectionOpen) {
-      outputString += '\n</section>';
-    }
+      return outputString;
+    },
+  };
+}
 
-    return outputString;
-  },
-}));
+// register the extension with showdown
+showdown.extension('section-groups', showdownSectionGroups);
