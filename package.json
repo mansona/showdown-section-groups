@@ -13,8 +13,8 @@
   "author": "Chris Manson <chris.manson@simplabs.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/showdownjs/showdown-extension-boilerplate.git",
-    "web": "https://github.com/showdownjs/showdown-extension-boilerplate"
+    "url": "https://github.com/mansona/showdown-section-groups.git",
+    "web": "https://github.com/mansona/showdown-section-groups"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
