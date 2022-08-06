@@ -30,6 +30,7 @@
     "showdown": "*"
   },
   "scripts": {
+    "lint": "eslint .",
     "test": "npm run build && mocha test",
     "build": "babel src -d lib",
     "prepublishOnly": "npm build"
