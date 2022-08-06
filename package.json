@@ -1,6 +1,7 @@
 {
   "name": "showdown-section-groups",
-  "main": "./lib/showdown-section-groups.js",
+  "main": "./src/showdown-section-groups.js",
+  "type": "module",
   "version": "0.3.0",
   "description": "A showdown extension that wraps headers and paragraphs in sections",
   "keywords": [
@@ -17,22 +18,18 @@
     "web": "https://github.com/mansona/showdown-section-groups"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
-    "chai": "^4.1.2",
-    "eslint": "^5.4.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "mocha": "^5.2.0",
-    "showdown": "^1.8.6"
+    "chai": "^4.3.6",
+    "eslint": "^8.21.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "mocha": "^10.0.0",
+    "showdown": "^2.1.0"
   },
   "peerDependencies": {
     "showdown": "*"
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run build && mocha test",
-    "build": "babel src -d lib",
-    "prepublishOnly": "npm build"
+    "test": "mocha test"
   }
 }
