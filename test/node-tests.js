@@ -1,8 +1,10 @@
-require('chai').should();
-const showdown = require('showdown');
-require('../lib/showdown-section-groups.js');
+import { expect } from 'chai';
+import showdown from 'showdown';
+import fs from 'fs';
 
-const fs = require('fs');
+// I thought the side effects thing was not possible in modules 🤔
+// eslint-disable-next-line no-unused-vars, import/extensions
+import showdownSectionGroups from '../src/showdown-section-groups.js';
 
 const converter = new showdown.Converter({ extensions: ['section-groups'] });
 
@@ -17,15 +19,11 @@ function map(dir) {
   return function mapFile(file) {
     const name = file.replace('.md', '');
 
-
     const htmlPath = `${dir + name}.html`;
-
 
     const html = fs.readFileSync(htmlPath, 'utf8');
 
-
     const mdPath = `${dir + name}.md`;
-
 
     const md = fs.readFileSync(mdPath, 'utf8');
 
@@ -69,7 +67,7 @@ function assertion(testCase) {
     testCase = normalize(testCase);
 
     // Compare
-    testCase.actual.should.equal(testCase.expected);
+    expect(testCase.actual).to.equal(testCase.expected);
   };
 }
 
